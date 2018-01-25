@@ -8,11 +8,13 @@ int kirkkaus;
 int kek;
 int buttonState = 0;
 int lastButtonState = 0;
+int secondled;
 void setup()
 {
  pinMode(buttonpin, INPUT);
- pinMode(5, OUTPUT);
-pinMode(2, INPUT);
+ pinMode(5, OUTPUT); //First led 
+pinMode(2, INPUT);   //Button
+pinMode(6, OUTPUT);  //Second led
 Serial.begin(9600);
 }
 
@@ -25,25 +27,30 @@ void loop()
    if(state == 0) // if the state is off, turn it on
    {
      //do stuff
-     /* do{
-    // statement block
-    kirkkaus =(kirkkaus+1);
-  delay(30);
-} */ while (kirkkaus < 100){
+     
+// Code that turns the led on
+while (kirkkaus < 100){
   kirkkaus =(kirkkaus+1);
+  secondled =(secondled-1);
   delay(10);
   analogWrite(5, kirkkaus);
+  analogWrite(6, secondled); //additional LED
 }
      state = 1;
    }
    else // if the state is on, turn it off
    {
+
+    // Code that makes the led turn off
 while (kirkkaus > 0){
   kirkkaus =(kirkkaus-1);
+  secondled =(secondled+1);
   delay(10);
   analogWrite(5, kirkkaus);
+  analogWrite(6, secondled); //additional LED
 }
      kirkkaus = 0;
+     secondled = 100;
      state = 0; 
    }
    oldbutton = 1;
